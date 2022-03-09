@@ -12,6 +12,8 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     var locationManager = CLLocationManager()
     
+    @Published var restaurants = [Business]()
+    @Published var sights = [Business]()
     
     override init(){
         
@@ -45,8 +47,8 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         if userLocation != nil {
             locationManager.stopUpdatingLocation()
             
-//            getBusinesses(category: "arts", location: userLocation!)
-            getBusinesses(category: "restaurants", location: userLocation!)
+            getBusinesses(category: Constants.sightsKey, location: userLocation!)
+            getBusinesses(category: Constants.restaurantsKey, location: userLocation!)
             
             
             
@@ -65,21 +67,21 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     
     func getBusinesses(category: String, location: CLLocation){
         // Create URL (traditional way?)
-        let urlString = "https://api.yelp.com/v3/businesses/search?latitude=\(location.coordinate.latitude)&longitude=\(location.coordinate.longitude)&categories=\(category)&limit=6"
-        
-        let url = URL(string: urlString)
+//        let urlString = "https://api.yelp.com/v3/businesses/search?latitude=\(location.coordinate.latitude)&longitude=\(location.coordinate.longitude)&categories=\(category)&limit=6"
+//
+//        let url = URL(string: urlString)
         
         //Another way to create URL
-        /*
-        var urlComponents = URLComponents(string: "https://api.yelp.com/v3/businesses/search")
+        
+        var urlComponents = URLComponents(string: "\(Constants.apiUrl)")
         urlComponents?.queryItems = [
             URLQueryItem(name: "latitude", value: String(location.coordinate.latitude)),
             URLQueryItem(name: "longitude", value: String(location.coordinate.longitude)),
             URLQueryItem(name: "categories", value: category),
             URLQueryItem(name: "limit", value: String(6))
         ]
-         var url = urlComponents?.url
-        */
+       let url = urlComponents?.url
+        
         
         //Create URL Request
         
@@ -90,19 +92,38 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         
         var request = URLRequest(url: url!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10.0)
         request.httpMethod = "GET"
-        request.addValue("Bearer 9A6HbuBUdhEeUKKaval0-nc5IhG3-XYH3A09NgELAKntvkdYXTgVLKqVtEsqrigwyuS_6tBszGVwwc41u0Hoq83ElJOdWlGkoWigRwGAsQuQgTeobF1yHebD_s0oYnYx", forHTTPHeaderField: "Authorization")
+        request.addValue("Bearer \(Constants.apiKey)", forHTTPHeaderField: "Authorization")
         //Get URLSession
         
         
         let session = URLSession.shared
         
         //Create Data Task
-        let dataTask = session.dataTask(with: request) { Data, response, error in
+        let dataTask = session.dataTask(with: request) { data, response, error in
             //Check that there isn't an error
             
-            guard error == nil else {
-                return
+            
+            if error == nil {
+                do{
+                    let decoder = JSONDecoder()
+                    let result = try decoder.decode(BusinessSearch.self, from: data!)
+                    
+                    
+                    //Assign results to the appropriate property
+                    DispatchQueue.main.async {
+                        if category == Constants.sightsKey {
+                            self.sights = result.businesses
+                        } else if category == Constants.restaurantsKey {
+                            self.restaurants = result.businesses
+                        }
+                    }
+                    
+                } catch {
+                    print(error)
+                }
+                
             }
+            
         }
         //Start the Data Task
         dataTask.resume()
