@@ -8,15 +8,18 @@
 import Foundation
 
 //Business is the main struct because the key is Business and the value is an array containing other key-value pairs.
-struct Business: Decodable, Identifiable {
+class Business: Decodable, Identifiable, ObservableObject {
+    
+    @Published var imageData: Data?
+    //Data that we are downloading from the imageUrl
     
     var id: String?
     var alias: String?
     var name: String?
-    var image_url: String
-    var is_closed: Bool?
+    var imageUrl: String
+    var isClosed: Bool?
     var url: String?
-    var review_count: Int?
+    var reviewCount: Int?
     var categories: [Category]?
     var rating: Double?
     var coordinates: Coordinate?
@@ -27,6 +30,42 @@ struct Business: Decodable, Identifiable {
     var distance: Double?
     
     
+    enum CodingKeys: String, CodingKey {
+        case imageUrl = "image_url"
+        case isClosed = "is_closed"
+        case reviewCount = "review_count"
+        
+        case id
+        case alias
+        case name
+        case url
+        case categories
+        case rating
+        case coordinates
+        case transactions
+        case price
+        case location
+        case phone
+        case distance
+    }
+    
+    func getImageData(){
+        guard imageUrl != nil else {
+            return
+        }
+        
+        if let url = URL(string: imageUrl) {
+            let session = URLSession.shared
+            let dataTask = session.dataTask(with: url) { data, response, error in
+                if error == nil {
+                    DispatchQueue.main.async {
+                        self.imageData = data!
+                    }
+                }
+            }
+            dataTask.resume()
+        }
+    }
     
 }
 
@@ -50,5 +89,15 @@ struct Location: Decodable {
     var address2: String?
     var address3: String?
     var state: String?
-    var zip_code: String?
+    var zipCode: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case zipCode = "zip_code"
+        case city
+        case country
+        case address1
+        case address2
+        case address3
+        case state
+    }
 }
