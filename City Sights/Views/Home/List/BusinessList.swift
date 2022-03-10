@@ -15,20 +15,10 @@ struct BusinessList: View {
             LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]){
                 
                 
-                Section(header: BusinessSectionHeader(title: "Restaurants")){
-                    ForEach(model.restaurants) { business in
-                        Text(business.name ?? "")
-                        Divider()
-                    }
-                }//Business section
+                BusinessSectionView(title: "Restaurants", businesses: model.restaurants)
+                BusinessSectionView(title: "Sights", businesses: model.sights)
                
-                Section(header: BusinessSectionHeader(title: "Sights")){
-                    
-                    ForEach(model.sights) { business in
-                        Text(business.name ?? "")
-                        Divider()
-                    }
-                } //Sights section
+  
                 
             }//Lazy Vstack
         }//Scrollview
