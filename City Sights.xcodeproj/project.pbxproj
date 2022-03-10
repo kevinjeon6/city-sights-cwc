@@ -16,6 +16,7 @@
 		7487424B27D7C58800E92C06 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7487424A27D7C58800E92C06 /* Preview Assets.xcassets */; };
 		7487425527D7E3B600E92C06 /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7487425427D7E3B600E92C06 /* ContentModel.swift */; };
 		748E77DE27DA51F400BFA502 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748E77DD27DA51F400BFA502 /* HomeView.swift */; };
+		748E77E127DA584300BFA502 /* BusinessList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748E77E027DA584300BFA502 /* BusinessList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		7487424A27D7C58800E92C06 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7487425427D7E3B600E92C06 /* ContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
 		748E77DD27DA51F400BFA502 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		748E77E027DA584300BFA502 /* BusinessList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 		748E77DA27DA51D200BFA502 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				748E77DF27DA583200BFA502 /* List */,
 				748E77DD27DA51F400BFA502 /* HomeView.swift */,
 			);
 			path = Home;
@@ -136,6 +139,14 @@
 			children = (
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		748E77DF27DA583200BFA502 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				748E77E027DA584300BFA502 /* BusinessList.swift */,
+			);
+			path = List;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +224,7 @@
 				742AFBAA27D91A6300C8B745 /* Business.swift in Sources */,
 				7487424427D7C58500E92C06 /* CitySightsApp.swift in Sources */,
 				742AFBAC27D91E7E00C8B745 /* BusinessSearch.swift in Sources */,
+				748E77E127DA584300BFA502 /* BusinessList.swift in Sources */,
 				7487425527D7E3B600E92C06 /* ContentModel.swift in Sources */,
 				742AFBAF27D9246200C8B745 /* Constants.swift in Sources */,
 			);
