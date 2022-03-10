@@ -8,8 +8,31 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var model: ContentModel
+    @State var isMapShowing = false
+    
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        if model.restaurants.count != 0 || model.sights.count != 0 {
+            if !isMapShowing {
+                VStack(alignment: .leading){
+                    HStack{
+                        Image(systemName: "location")
+                        Text("Pittsburgh")
+                        Spacer()
+                        Text("Switch to MapView")
+                    }//HStack
+                    Divider()
+                    
+                }//Vstack
+            } else {
+                
+            }
+        } else {
+            ProgressView()
+        }
     }
 }
 
