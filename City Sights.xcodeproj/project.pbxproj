@@ -15,6 +15,7 @@
 		7487424827D7C58800E92C06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7487424727D7C58800E92C06 /* Assets.xcassets */; };
 		7487424B27D7C58800E92C06 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7487424A27D7C58800E92C06 /* Preview Assets.xcassets */; };
 		7487425527D7E3B600E92C06 /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7487425427D7E3B600E92C06 /* ContentModel.swift */; };
+		748E77DE27DA51F400BFA502 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748E77DD27DA51F400BFA502 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		7487424727D7C58800E92C06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7487424A27D7C58800E92C06 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7487425427D7E3B600E92C06 /* ContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
+		748E77DD27DA51F400BFA502 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,9 +108,34 @@
 		7487425327D7C65F00E92C06 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				748E77DC27DA51DF00BFA502 /* Onboarding */,
+				748E77DB27DA51D900BFA502 /* Denied */,
+				748E77DA27DA51D200BFA502 /* Home */,
 				7487424527D7C58500E92C06 /* LaunchView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		748E77DA27DA51D200BFA502 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				748E77DD27DA51F400BFA502 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		748E77DB27DA51D900BFA502 /* Denied */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Denied;
+			sourceTree = "<group>";
+		};
+		748E77DC27DA51DF00BFA502 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -182,6 +209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7487424627D7C58500E92C06 /* LaunchView.swift in Sources */,
+				748E77DE27DA51F400BFA502 /* HomeView.swift in Sources */,
 				742AFBAA27D91A6300C8B745 /* Business.swift in Sources */,
 				7487424427D7C58500E92C06 /* CitySightsApp.swift in Sources */,
 				742AFBAC27D91E7E00C8B745 /* BusinessSearch.swift in Sources */,
