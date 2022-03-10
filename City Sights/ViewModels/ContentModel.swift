@@ -76,7 +76,7 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         
         //Another way to create URL
         
-        var urlComponents = URLComponents(string: "\(Constants.apiUrl)")
+        var urlComponents = URLComponents(string: Constants.apiUrl)
         urlComponents?.queryItems = [
             URLQueryItem(name: "latitude", value: String(location.coordinate.latitude)),
             URLQueryItem(name: "longitude", value: String(location.coordinate.longitude)),
@@ -126,11 +126,11 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                 }
                 
             }
-            
         }
-        //Start the Data Task
-        dataTask.resume()
+            //Start the Data Task
+            dataTask.resume()
+        }
     }
     
-}
+
 
