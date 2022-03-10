@@ -25,6 +25,7 @@ struct HomeView: View {
                         Text("Switch to MapView")
                     }//HStack
                     Divider()
+                    BusinessList()
                     
                 }//Vstack
             } else {

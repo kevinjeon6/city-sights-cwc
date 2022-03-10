@@ -8,8 +8,30 @@
 import SwiftUI
 
 struct BusinessList: View {
+    @EnvironmentObject var model: ContentModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView{
+            LazyVStack(alignment: .leading, pinnedViews: [.sectionHeaders]){
+                
+                
+                Section(header: BusinessSectionHeader(title: "Restaurants")){
+                    ForEach(model.restaurants) { business in
+                        Text(business.name ?? "")
+                        Divider()
+                    }
+                }//Business section
+               
+                Section(header: BusinessSectionHeader(title: "Sights")){
+                    
+                    ForEach(model.sights) { business in
+                        Text(business.name ?? "")
+                        Divider()
+                    }
+                } //Sights section
+                
+            }//Lazy Vstack
+        }//Scrollview
     }
 }
 

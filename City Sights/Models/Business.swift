@@ -8,7 +8,7 @@
 import Foundation
 
 //Business is the main struct because the key is Business and the value is an array containing other key-value pairs.
-struct Business: Decodable {
+struct Business: Decodable, Identifiable {
     
     var id: String?
     var alias: String?
