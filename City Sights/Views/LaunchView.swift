@@ -15,6 +15,7 @@ struct LaunchView: View {
     var body: some View {
         
         //Detect the authorization status of geolocating the user
+
         if model.authorizationState == .notDetermined {
             //show onboarding
         } else if model.authorizationState == CLAuthorizationStatus.authorizedAlways || model.authorizationState == CLAuthorizationStatus.authorizedWhenInUse{
@@ -28,14 +29,13 @@ struct LaunchView: View {
         //if approved, show home view
         
         //if denied show denied
-        Text("Hello, world!")
-            .padding()
+     
     }
 }
 
 struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {
         LaunchView()
-            .environmentObject(ContentModel())
+            
     }
 }

@@ -23,7 +23,9 @@ struct HomeView: View {
                             Image(systemName: "location")
                             Text("Pittsburgh")
                             Spacer()
-                            Text("Switch to MapView")
+                            Button("Switch to map view") {
+                                self.isMapShowing = true
+                            }
                         }//HStack
                         Divider()
                         BusinessList()
@@ -32,7 +34,8 @@ struct HomeView: View {
                     .padding([.horizontal, .top])//Vstack
                     .navigationBarHidden(true)
                 } else {
-                    
+                    BusinessMap()
+                        .ignoresSafeArea()
                 }
             }//NavigationView
             
