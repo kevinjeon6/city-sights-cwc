@@ -15,8 +15,16 @@ struct BusinessSectionView: View {
     var body: some View {
         Section(header: BusinessSectionHeader(title: title)){
             ForEach(businesses) { business in
-                Text(business.name ?? "")
-                Divider()
+                
+                NavigationLink {
+                    BusinessDetails(business: business)
+                } label: {
+                    BusinessRowView(business: business)
+                }
+
+                
+           
+              
             }
         }
     }

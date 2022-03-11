@@ -26,6 +26,7 @@ class Business: Decodable, Identifiable, ObservableObject {
     var transactions: [String]?
     var price: String?
     var location: Location?
+    var displayPhone: String?
     var phone: String?
     var distance: Double?
     
@@ -34,6 +35,7 @@ class Business: Decodable, Identifiable, ObservableObject {
         case imageUrl = "image_url"
         case isClosed = "is_closed"
         case reviewCount = "review_count"
+        case displayPhone = "display_phone"
         
         case id
         case alias
@@ -90,9 +92,11 @@ struct Location: Decodable {
     var address3: String?
     var state: String?
     var zipCode: String?
+    var displayAddress: [String]?
     
     enum CodingKeys: String, CodingKey {
         case zipCode = "zip_code"
+        case displayAddress = "display_address"
         case city
         case country
         case address1
