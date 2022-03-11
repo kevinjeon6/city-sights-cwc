@@ -86,7 +86,7 @@ struct BusinessDetails: View {
                     Text(business.url ?? "")
                         .lineLimit(1)
                     Spacer()
-                    Link("Call", destination: URL(string: "tel: \(business.url ?? "")")!)
+                    Link("Visit", destination: URL(string: "\(business.url ?? "")")!)
                 }
                 .padding()
                 Divider()
