@@ -11,6 +11,7 @@ import MapKit
 struct BusinessMap: UIViewRepresentable {
     
     @EnvironmentObject var model: ContentModel
+    @Binding var selectedBusiness: Business?
     
     var locations: [MKPointAnnotation] {
         
@@ -36,6 +37,7 @@ struct BusinessMap: UIViewRepresentable {
     func makeUIView(context: Context) -> MKMapView {
         
         let mapView = MKMapView()
+        mapView.delegate = context.coordinator
         
         //Make the user show up on the mpa
         mapView.showsUserLocation = true
@@ -55,5 +57,65 @@ struct BusinessMap: UIViewRepresentable {
     
     static func dismantleUIView(_ uiView: MKMapView, coordinator: ()) {
         uiView.removeAnnotations(uiView.annotations)
+    }
+    
+    //MARK: - Coordinator class
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(map: self)
+    }
+    
+    class Coordinator: NSObject, MKMapViewDelegate {
+        
+        var map: BusinessMap
+        
+        init(map: BusinessMap){
+            self.map = map
+        }
+        
+        
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            //If the annotation is the user blue dot, return nil
+            
+            if annotation is MKUserLocation {
+                return nil
+            }
+            
+            //Check if there's a resusable annotation view first
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Constants.annotationReuseId)
+            
+            if annotationView == nil {
+                //create an annotation view
+               annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: Constants.annotationReuseId)
+                
+                annotationView!.canShowCallout = true
+                annotationView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            } else {
+                //We got a resuable one
+                annotationView!.annotation = annotation
+            }
+           
+            //return it
+            return annotationView
+        }
+        
+        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        // User tapped on the annotation view
+            
+            
+            //Get the business object that this annotation represents
+            //Loop through businesses in the model and fin a match
+            
+            for business in map.model.restaurants + map.model.sights {
+                if business.name == view.annotation?.title{
+                    map.selectedBusiness = business
+                    return
+                }
+            }
+  
+            
+            //Set the selectedBusiness property to that business object
+            
+        }
     }
 }

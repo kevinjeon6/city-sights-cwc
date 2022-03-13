@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var model: ContentModel
     @State var isMapShowing = false
+    @State var selectedBusiness: Business?
     
     
     
@@ -34,8 +35,11 @@ struct HomeView: View {
                     .padding([.horizontal, .top])//Vstack
                     .navigationBarHidden(true)
                 } else {
-                    BusinessMap()
+                    BusinessMap(selectedBusiness: $selectedBusiness)
                         .ignoresSafeArea()
+                        .sheet(item: $selectedBusiness) { business in
+                            BusinessDetails(business: business)
+                        }
                 }
             }//NavigationView
             
