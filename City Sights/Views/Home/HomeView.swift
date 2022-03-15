@@ -35,11 +35,31 @@ struct HomeView: View {
                     .padding([.horizontal, .top])//Vstack
                     .navigationBarHidden(true)
                 } else {
-                    BusinessMap(selectedBusiness: $selectedBusiness)
-                        .ignoresSafeArea()
-                        .sheet(item: $selectedBusiness) { business in
-                            BusinessDetails(business: business)
+                    ZStack (alignment: .top){
+                        BusinessMap(selectedBusiness: $selectedBusiness)
+                            .ignoresSafeArea()
+                            .sheet(item: $selectedBusiness) { business in
+                                BusinessDetails(business: business)
                         }
+                        
+                        ZStack{
+                            Rectangle()
+                                .foregroundColor(.white)
+                                .cornerRadius(5)
+                                .frame(height: 48)
+                            HStack{
+                                Image(systemName: "location")
+                                Text("Pittsburgh")
+                                Spacer()
+                                Button("Switch to list view") {
+                                    self.isMapShowing = false
+                                }
+                            }//HStack
+                            .padding()
+                        }
+                        .padding()
+                    }//Zstack
+                    .navigationBarHidden(true)
                 }
             }//NavigationView
             
