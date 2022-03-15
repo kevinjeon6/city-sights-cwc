@@ -17,12 +17,12 @@ struct LaunchView: View {
         //Detect the authorization status of geolocating the user
 
         if model.authorizationState == .notDetermined {
-            //show onboarding
+            OnboardingView()
         } else if model.authorizationState == CLAuthorizationStatus.authorizedAlways || model.authorizationState == CLAuthorizationStatus.authorizedWhenInUse{
             //show home view
             HomeView()
         } else {
-            //show denied view
+      LocationDeniedView()
         }
         //if undetermined, show onboarding
         
