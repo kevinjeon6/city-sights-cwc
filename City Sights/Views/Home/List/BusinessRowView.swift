@@ -39,7 +39,8 @@ struct BusinessRowView: View {
                         .font(.caption)
                 }//Vstack
             }
-            Divider()
+            DashedDivider()
+                .padding(.vertical)
         }//Vstack
         .foregroundColor(.black)
     }
