@@ -15,10 +15,13 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var authorizationState = CLAuthorizationStatus.notDetermined
     @Published var restaurants = [Business]()
     @Published var sights = [Business]()
+    @Published var placemark: CLPlacemark?
+    
+    
     
     override init(){
         
-        //Init method of NSObject
+        //Init method of NSObject. Supe refers to the parent class
         super.init()
         //Set content model as the delegate of the location manager
         locationManager.delegate = self
@@ -39,6 +42,7 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
             //update the authorizationState property
             authorizationState = locationManager.authorizationStatus
             
+            //We have permission
             if locationManager.authorizationStatus == .authorizedAlways || locationManager.authorizationStatus == .authorizedWhenInUse {
                 //Start geolocation of the user, after getting permission
                 locationManager.startUpdatingLocation()
@@ -53,8 +57,25 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         let userLocation = locations.first
         
         if userLocation != nil {
+            
+            
+            //We have a location. Stop requesting the location aftwer we get it once
             locationManager.stopUpdatingLocation()
             
+          
+            
+            //Get the placemark of the user
+            let geoCoder = CLGeocoder()
+            geoCoder.reverseGeocodeLocation(userLocation!) { placemarks, error in
+                //Check that there aren't errors
+                
+                if error == nil && placemarks != nil {
+                    //Take the first placemark
+                    self.placemark = placemarks?.first
+                }
+            }
+            
+            //If we have the coordinates of the user, send into Yelp API
             getBusinesses(category: Constants.sightsKey, location: userLocation!)
             getBusinesses(category: Constants.restaurantsKey, location: userLocation!)
             
@@ -74,8 +95,10 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
     //MARK: - Yelp API methods
     
     func getBusinesses(category: String, location: CLLocation){
-        // Create URL (traditional way?)
+        // Step 1. Create URL (traditional way?)
 //        let urlString = "https://api.yelp.com/v3/businesses/search?latitude=\(location.coordinate.latitude)&longitude=\(location.coordinate.longitude)&categories=\(category)&limit=6"
+        
+        //
 //
 //        let url = URL(string: urlString)
         
@@ -91,7 +114,7 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
        let url = urlComponents?.url
         
         
-        //Create URL Request
+        //Step 2. Create URL Request
         
         
         guard url != nil else {
@@ -101,12 +124,14 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
         var request = URLRequest(url: url!, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10.0)
         request.httpMethod = "GET"
         request.addValue("Bearer \(Constants.apiKey)", forHTTPHeaderField: "Authorization")
-        //Get URLSession
+        
+        
+        // Step 3. Get URLSession
         
         
         let session = URLSession.shared
         
-        //Create Data Task
+        //Step 4. Create Data Task
         let dataTask = session.dataTask(with: request) { data, response, error in
             //Check that there isn't an error
             
@@ -143,7 +168,7 @@ class ContentModel: NSObject, CLLocationManagerDelegate, ObservableObject {
                 
             }
         }
-            //Start the Data Task
+            //Step 5. Start the Data Task
             dataTask.resume()
         }
     }

@@ -18,18 +18,32 @@ struct HomeView: View {
         
         if model.restaurants.count != 0 || model.sights.count != 0 {
             NavigationView{
+                
+                //Determine if we should show the list or map
                 if !isMapShowing {
+                    
+                    //Show list
                     VStack(alignment: .leading){
                         HStack{
                             Image(systemName: "location")
-                            Text("Pittsburgh")
+                            Text(model.placemark?.subLocality ?? "")
                             Spacer()
                             Button("Switch to map view") {
                                 self.isMapShowing = true
                             }
                         }//HStack
                         Divider()
-                        BusinessList()
+                        
+                        ZStack(alignment: .top){
+                            BusinessList()
+                            
+                            HStack{
+                                Spacer()
+                                YelpAttribution(link: "https://yelp.com")
+                            }//HStack
+                            .padding(.trailing, -20)
+                        }//Zstack
+                      
                         
                     }
                     .padding([.horizontal, .top])//Vstack
@@ -49,7 +63,7 @@ struct HomeView: View {
                                 .frame(height: 48)
                             HStack{
                                 Image(systemName: "location")
-                                Text("Pittsburgh")
+                                Text(model.placemark?.subLocality ?? "")
                                 Spacer()
                                 Button("Switch to list view") {
                                     self.isMapShowing = false
